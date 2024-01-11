@@ -1,8 +1,8 @@
 package com.amadeus.restflightsearchamadeus.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.Date;
 
 @Entity
 @Table(name="flight")
@@ -11,14 +11,18 @@ public class Flight {
     }
     @Id
     private String id;
-    private String departureAirport;
-    private String arrivalAirport;
-    private String departureDate;
-    private String returnDate;
+    @ManyToOne
+    @JoinColumn(name = "departure_airport_id", referencedColumnName = "id")
+    private Airport departureAirport;
+    @ManyToOne
+    @JoinColumn(name= "arrival_airport_id", referencedColumnName = "id")
+    private Airport arrivalAirport;
+    private Date departureDate;
+    private Date returnDate;
     private double price;
 
 
-    public Flight(String id, String departureAirport, String arrivalAirport, String departureDate, String returnDate, double price) {
+    public Flight(String id, Airport departureAirport, Airport arrivalAirport, Date departureDate, Date returnDate, double price) {
         this.id = id;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
@@ -35,35 +39,35 @@ public class Flight {
         this.id = id;
     }
 
-    public String getDepartureAirport() {
+    public Airport getDepartureAirport() {
         return departureAirport;
     }
 
-    public void setDepartureAirport(String departureAirport) {
+    public void setDepartureAirport(Airport departureAirport) {
         this.departureAirport = departureAirport;
     }
 
-    public String getArrivalAirport() {
+    public Airport getArrivalAirport() {
         return arrivalAirport;
     }
 
-    public void setArrivalAirport(String arrivalAirport) {
+    public void setArrivalAirport(Airport arrivalAirport) {
         this.arrivalAirport = arrivalAirport;
     }
 
-    public String getDepartureDate() {
+    public Date getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(String departureDate) {
+    public void setDepartureDate(Date departureDate) {
         this.departureDate = departureDate;
     }
 
-    public String getReturnDate() {
+    public Date getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(String returnDate) {
+    public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
 

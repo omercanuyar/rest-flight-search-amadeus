@@ -1,5 +1,6 @@
 package com.amadeus.restflightsearchamadeus.service.impl;
 
+import com.amadeus.restflightsearchamadeus.exception.AirportNotFoundException;
 import com.amadeus.restflightsearchamadeus.model.Airport;
 import com.amadeus.restflightsearchamadeus.repository.AirportRepository;
 import com.amadeus.restflightsearchamadeus.service.AirportService;
@@ -34,7 +35,10 @@ public class AirportServiceImpl implements AirportService {
 
     @Override
     public Airport getAirport(String id) {
-       return airportRepository.findById(id).get();
+        if(airportRepository.findById(id).isEmpty()){
+            throw new AirportNotFoundException("Requested Airport does not exist.");
+        }
+        return airportRepository.findById(id).get();
     }
 
     @Override

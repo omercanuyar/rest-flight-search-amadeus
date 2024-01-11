@@ -1,5 +1,5 @@
 package com.amadeus.restflightsearchamadeus.service.impl;
-
+import com.amadeus.restflightsearchamadeus.exception.FlightNotFoundException;
 import com.amadeus.restflightsearchamadeus.model.Flight;
 import com.amadeus.restflightsearchamadeus.repository.FlightRepository;
 import com.amadeus.restflightsearchamadeus.service.FlightService;
@@ -33,6 +33,9 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public Flight getFlight(String id) {
+        if(flightRepository.findById(id).isEmpty()){
+            throw new FlightNotFoundException("Requested Flight does not exist.");
+        }
         return flightRepository.findById(id).get();
     }
 

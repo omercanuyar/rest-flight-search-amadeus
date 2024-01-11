@@ -1,7 +1,10 @@
 package com.amadeus.restflightsearchamadeus.controller;
 
 import com.amadeus.restflightsearchamadeus.model.Airport;
+import com.amadeus.restflightsearchamadeus.response.ResponseHandler;
 import com.amadeus.restflightsearchamadeus.service.AirportService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +21,8 @@ public class AirportController {
 
     // Read Specific Airport Details from DB
     @GetMapping("{id}")
-    public Airport getAirportDetails(@PathVariable("id") String id){
-        return airportService.getAirport(id);
+    public ResponseEntity<Object> getAirportDetails(@PathVariable("id") String id){
+        return ResponseHandler.responseBuilder("Requested Airport details are given here.", HttpStatus.OK, airportService.getAirport(id));
     }
 
     // Read All Airport Details from DB
