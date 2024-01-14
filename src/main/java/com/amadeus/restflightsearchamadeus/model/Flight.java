@@ -17,17 +17,15 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name= "arrival_airport_id", referencedColumnName = "id")
     private Airport arrivalAirport;
-    private Date departureDate;
-    private Date returnDate;
+    private Date date;
     private double price;
 
 
-    public Flight(String id, Airport departureAirport, Airport arrivalAirport, Date departureDate, Date returnDate, double price) {
+    public Flight(String id, Airport departureAirport, Airport arrivalAirport, Date date, double price) {
         this.id = id;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
-        this.departureDate = departureDate;
-        this.returnDate = returnDate;
+        this.date = date;
         this.price = price;
     }
 
@@ -55,20 +53,12 @@ public class Flight {
         this.arrivalAirport = arrivalAirport;
     }
 
-    public Date getDepartureDate() {
-        return departureDate;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDepartureDate(Date departureDate) {
-        this.departureDate = departureDate;
-    }
-
-    public Date getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
+    public void setDate(Date departureDate) {
+        this.date = departureDate;
     }
 
     public double getPrice() {

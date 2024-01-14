@@ -45,4 +45,9 @@ public class AirportServiceImpl implements AirportService {
     public List<Airport> getAllAirport() {
         return airportRepository.findAll();
     }
+
+    @Override
+    public Airport getAirportByName(String name) {
+        return airportRepository.findAirportByCity(name);
+    }
 }

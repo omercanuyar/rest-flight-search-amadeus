@@ -10,5 +10,6 @@ public interface AirportService {
     public String deleteAirport(String id);
     public Airport getAirport(String id);
     public List<Airport> getAllAirport();
+    public Airport getAirportByName(String name);
 
 }
