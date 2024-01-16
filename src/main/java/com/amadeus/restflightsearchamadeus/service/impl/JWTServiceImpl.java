@@ -18,10 +18,16 @@ import java.util.function.Function;
 @Service
 public class JWTServiceImpl implements JWTService {
 
+    private final KeyPair keyPair;
+
+    public JWTServiceImpl() {
+        this.keyPair = generateKeyPair();
+    }
+
     private KeyPair generateKeyPair() {
         try {
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC");
-            keyPairGenerator.initialize(256);
+            keyPairGenerator.initialize(384); // Güçlü bir anahtar uzunluğu seçin
             return keyPairGenerator.generateKeyPair();
         } catch (Exception e) {
             throw new RuntimeException("ECDSA anahtar çifti oluşturma hatası", e);
@@ -29,26 +35,26 @@ public class JWTServiceImpl implements JWTService {
     }
 
     private PrivateKey getPrivateKey() {
-        return generateKeyPair().getPrivate();
+        return keyPair.getPrivate();
     }
 
     private PublicKey getPublicKey() {
-        return generateKeyPair().getPublic();
+        return keyPair.getPublic();
     }
 
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder().setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
-                .signWith(getPrivateKey(), SignatureAlgorithm.ES256)
+                .signWith(getPrivateKey(), SignatureAlgorithm.ES384)
                 .compact();
     }
 
     public String generateRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 604800000))
-                .signWith(getPrivateKey(), SignatureAlgorithm.ES256)
+                .signWith(getPrivateKey(), SignatureAlgorithm.ES384)
                 .compact();
     }
 
