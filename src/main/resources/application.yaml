@@ -4,6 +4,10 @@ spring:
     username: root
     password:
 
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
   #JPA Settings
   jpa:
     hibernate:

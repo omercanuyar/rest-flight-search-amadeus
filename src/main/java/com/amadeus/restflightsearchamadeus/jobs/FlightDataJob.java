@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class FlightDataJob {
 
-    private final String apiUrl = "http://localhost:8080";
+    private final String apiUrl = "http://localhost:8080/api/v1";
 
     private final RestTemplate restTemplate;
     private final FlightService flightService;
